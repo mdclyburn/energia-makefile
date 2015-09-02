@@ -43,9 +43,7 @@
 # in your ~/.profile if you want, but it is suggested that you specify this at
 # build time, especially if you work with different types of Arduino.  For
 # example:
-#
-#   $ export ENERGIABOARD=lpmsp430g2553
-#   $ make
+#	
 #
 # You may also need to set SERIALDEV if it is not detected correctly.
 #

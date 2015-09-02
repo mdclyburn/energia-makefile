@@ -9,7 +9,7 @@ INSTRUCTIONS
 ------------
 To build an elf file:
 (Assuming you are running linux)
-
+```
 1. Download Energia:
   http://energia.nu/download/
 
@@ -26,17 +26,19 @@ To build an elf file:
    make
 
 5. Get elf file.
+```
 
 To compile and upload your .elf file:
 
-1. run sudo /YOUR PATH/energia-0101E0016/hardware/tools/msp430/bin/mspdebug
+```
+1. run sudo /YOUR PATH/YOUR ENERGIA VERSION/hardware/tools/msp430/bin/mspdebug
 
 2. in the debugger, type 'erase'
 
 3. in the debugger, type 'prog yourFile.elf'
 
 4. in the debugger, type 'run'
-
+```
 
 ================================================================================
 Elpaso's Original Notes:
