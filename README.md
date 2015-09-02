@@ -16,10 +16,13 @@ Assuming you are running linux:
 
 3. cd to the energia-makefile directory  
 
-4.
- export ENERGIADIR=~/somewhere/energia
- export ENERGIABOARD=lpmsp430g2553
- make
+4. Place the .ino file that you want to compile in the energia-makefile dir
+
+4. export ENERGIADIR=/<path to energia>/energia
+
+   export ENERGIABOARD=lpmsp430g2553
+
+   make
 
 5. Profit!
 
