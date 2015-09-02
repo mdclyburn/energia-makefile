@@ -5,11 +5,27 @@ This project was forked from Elpaso's Energia Makefile project (https://github.c
 a number of years. His original notes can be found at the bottom of this
 readme.
 
+INSTRUCTIONS
+------------
+Assuming you are running linux:
+1. Download Energia:
+  http://energia.nu/download/
+
+2. Extract energia file to a directory of your choice.
+
+3. cd to the energia-makefile directory  
+
+4.
+$ export ENERGIADIR=~/somewhere/energia
+$ export ENERGIABOARD=lpmsp430g2553
+$ make
+
+5. Profit!
 
 
-
-
+================================================================================
 Elpaso's Original Notes:
+-----------------------
 
 Energia MSP430 Makefile
 -----------------------
