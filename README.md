@@ -17,9 +17,9 @@ Assuming you are running linux:
 3. cd to the energia-makefile directory  
 
 4.
- >export ENERGIADIR=~/somewhere/energia
- >export ENERGIABOARD=lpmsp430g2553
- >make
+ export ENERGIADIR=~/somewhere/energia
+ export ENERGIABOARD=lpmsp430g2553
+ make
 
 5. Profit!
 
