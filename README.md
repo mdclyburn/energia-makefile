@@ -7,7 +7,8 @@ readme.
 
 INSTRUCTIONS
 ------------
-Assuming you are running linux:
+To build an elf file:
+(Assuming you are running linux)
 
 1. Download Energia:
   http://energia.nu/download/
@@ -18,13 +19,23 @@ Assuming you are running linux:
 
 4. Place the .ino file that you want to compile in the energia-makefile dir
 
-4. export ENERGIADIR=/<path to energia>/energia
+4. export ENERGIADIR=/YOUR PATH/energia
 
-   export ENERGIABOARD=lpmsp430g2553
+   export ENERGIABOARD=lpmsp430g2553 (or whatever your taraget)
 
    make
 
-5. Profit!
+5. Get elf file.
+
+To compile and upload your .elf file:
+
+1. run sudo /YOUR PATH/energia-0101E0016/hardware/tools/msp430/bin/mspdebug
+
+2. in the debugger, type 'erase'
+
+3. in the debugger, type 'prog yourFile.elf'
+
+4. in the debugger, type 'run'
 
 
 ================================================================================
