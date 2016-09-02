@@ -8,27 +8,19 @@ Instructions
 To build an .elf file:
 
 1. Download Energia: http://energia.nu/download/
-
 2. Extract energia file to a directory of your choice.
-
 3. cd to the energia-makefile directory
-
 4. Place the .ino file that you want to compile in the energia-makefile dir
-
 5. Run:
-
 ```sh
 export ENERGIADIR=/YOUR PATH/energia
 export ENERGIABOARD=MSP-EXP430FR5969LP # or whatever your target board is
 make
 ```
 
-6. Get elf file.
-
 To compile and upload your .elf file:
 
 1. Run:
-
 ```sh
 make upload
 ```
