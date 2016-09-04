@@ -203,7 +203,7 @@ ENERGIACOREDIR := $(ENERGIADIR)/hardware/energia/msp430/cores/msp430
 ENERGIALIB := .lib/arduino.a
 ENERGIALIBLIBSDIR := $(ENERGIADIR)/hardware/energia/msp430/libraries
 ENERGIALIBLIBSPATH := $(foreach lib, $(LIBRARIES), \
-	 $(HOME)/Energia/libraries/$(lib)/ $(HOME)/Energia/libraries/$(lib)/utility/ $(ENERGIADIR)/libraries/$(lib)/ $(ENERGIADIR)/libraries/$(lib)/utility/ $(ENERGIACOREDIR)/libraries/$(lib) $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/)
+	 $(HOME)/Energia/libraries/$(lib)/ $(HOME)/Energia/libraries/$(lib)/utility/ $(ENERGIADIR)/libraries/$(lib)/ $(ENERGIADIR)/libraries/$(lib)/utility/ $(ENERGIACOREDIR)/libraries/$(lib) $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/ $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/utility/)
 ENERGIALIBOBJS := $(foreach dir, $(ENERGIACOREDIR) $(ENERGIALIBLIBSPATH), \
 	$(patsubst %, .lib/%.o, $(wildcard $(addprefix $(dir)/, *.c *.cpp))))
 
@@ -264,6 +264,7 @@ CPPFLAGS += $(patsubst %, -I$(HOME)/Energia/libraries/%/utility,  $(LIBRARIES))
 CPPFLAGS += $(addprefix -I$(ENERGIADIR)/libraries/, $(LIBRARIES))
 CPPFLAGS += $(patsubst %, -I$(ENERGIADIR)/libraries/%/utility, $(LIBRARIES))
 CPPFLAGS += $(addprefix -I$(ENERGIADIR)/hardware/energia/msp430/libraries/, $(LIBRARIES))
+CPPFLAGS += $(patsubst %, -I$(ENERGIADIR)/hardware/energia/msp430/libraries/%/utility, $(LIBRARIES))
 CPPDEPFLAGS = -MMD -MP -MF .dep/$<.dep
 CPPINOFLAGS := -x c++ -include $(ENERGIACOREDIR)/Arduino.h
 LINKFLAGS := -mmcu=$(BOARD_BUILD_MCU) -Os -Wl,-gc-sections,-u,main -lm
