@@ -1,7 +1,7 @@
 Energia MSP430 Makefile
 =======================
 
-The Energia Makefile project has followed a history of being forked from Elpaso's Energia Makefile project (https://github.com/elpaso/energia-makefile) and from Trevortomesh's fork (https://github.com/trevortomesh/energia-makefile). Both the original and the fork appear to be abandoned so I brought the Makefile up to working with Energia 1.6.0E18 and published it here.
+The Energia Makefile project has followed a history of being forked from Elpaso's Energia Makefile project (https://github.com/elpaso/energia-makefile) and from Trevortomesh's fork (https://github.com/trevortomesh/energia-makefile). Both the original and the fork appear to be abandoned so I brought the makefile up to working with Energia 1.6.0E18 and published it here.
 
 Instructions
 ------------
