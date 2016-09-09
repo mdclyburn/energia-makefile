@@ -165,23 +165,19 @@ LIBRARIES += $(filter $(notdir $(wildcard $(ENERGIADIR)/hardware/energia/msp430/
 endif
 
 # no serial device? make a poor attempt to detect an arduino
-SERIALDEVGUESS := 0
 ifeq "$(SERIALDEV)" ""
+
 ifeq "$(ENERGIABOARD)" "MSP-EXP430F5529LP"
 	SERIALDEV:= /dev/ttyACM1
 else ifeq "$(ENERGIABOARD)" "MSP-EXP430FR5969LP"
 	SERIALDEV:= /dev/ttyACM1
 else
-	SERIALDEV:= /dev/ttyACM0
+	SERIALDEV := $(firstword $(wildcard /dev/ttyACM? /dev/ttyUSB? /dev/tty.usbserial* /dev/tty.usbmodem*))
 endif
 
-#SERIALDEV := $(firstword $(wildcard \
-#	/dev/ttyACM? /dev/ttyUSB? /dev/tty.usbserial* /dev/tty.usbmodem*))
-SERIALDEVGUESS := 1
 endif
 
 # software
-#CC := msp430-gcc
 
 COMPILER_PREFIX := $(ENERGIADIR)/hardware/tools/msp430/bin/
 
@@ -214,9 +210,15 @@ ENERGIACOREDIR := $(ENERGIADIR)/hardware/energia/msp430/cores/msp430
 ENERGIALIB := .lib/arduino.a
 ENERGIALIBLIBSDIR := $(ENERGIADIR)/hardware/energia/msp430/libraries
 ENERGIALIBLIBSPATH := $(foreach lib, $(LIBRARIES), \
-	 $(ENERGIASBOOK)/libraries/$(lib)/ $(ENERGIASBOOK)/libraries/$(lib)/utility/ $(ENERGIADIR)/libraries/$(lib)/ $(ENERGIADIR)/libraries/$(lib)/utility/ $(ENERGIACOREDIR)/libraries/$(lib) $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/ $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/utility/)
+    $(ENERGIASBOOK)/libraries/$(lib)/ \
+    $(ENERGIASBOOK)/libraries/$(lib)/utility/ \
+    $(ENERGIADIR)/libraries/$(lib)/ \
+    $(ENERGIADIR)/libraries/$(lib)/utility/ \
+    $(ENERGIACOREDIR)/libraries/$(lib) \
+    $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/ \
+    $(ENERGIADIR)/hardware/energia/msp430/libraries/$(lib)/utility/)
 ENERGIALIBOBJS := $(foreach dir, $(ENERGIACOREDIR) $(ENERGIALIBLIBSPATH), \
-	$(patsubst %, .lib/%.o, $(wildcard $(addprefix $(dir)/, *.c *.cpp))))
+    $(patsubst %, .lib/%.o, $(wildcard $(addprefix $(dir)/, *.c *.cpp))))
 
 
 # no board?
@@ -231,15 +233,15 @@ endif
 # obtain board parameters from the arduino boards.txt file
 BOARDS_FILE := $(ENERGIADIR)/hardware/energia/msp430/boards.txt
 BOARD_BUILD_MCU := \
-	$(shell sed -ne "s/$(ENERGIABOARD).build.mcu=\(.*\)/\1/p" $(BOARDS_FILE))
+    $(shell sed -ne "s/$(ENERGIABOARD).build.mcu=\(.*\)/\1/p" $(BOARDS_FILE))
 BOARD_BUILD_FCPU := \
-	$(shell sed -ne "s/$(ENERGIABOARD).build.f_cpu=\(.*\)/\1/p" $(BOARDS_FILE))
+    $(shell sed -ne "s/$(ENERGIABOARD).build.f_cpu=\(.*\)/\1/p" $(BOARDS_FILE))
 BOARD_BUILD_VARIANT := \
-	$(shell sed -ne "s/$(ENERGIABOARD).build.variant=\(.*\)/\1/p" $(BOARDS_FILE))
+    $(shell sed -ne "s/$(ENERGIABOARD).build.variant=\(.*\)/\1/p" $(BOARDS_FILE))
 BOARD_UPLOAD_SPEED := \
-	$(shell sed -ne "s/$(ENERGIABOARD).upload.speed=\(.*\)/\1/p" $(BOARDS_FILE))
+    $(shell sed -ne "s/$(ENERGIABOARD).upload.speed=\(.*\)/\1/p" $(BOARDS_FILE))
 BOARD_UPLOAD_PROTOCOL := \
-	$(shell sed -ne "s/$(ENERGIABOARD).upload.protocol=\(.*\)/\1/p" $(BOARDS_FILE))
+    $(shell sed -ne "s/$(ENERGIABOARD).upload.protocol=\(.*\)/\1/p" $(BOARDS_FILE))
 
 # invalid board?
 ifeq "$(BOARD_BUILD_MCU)" ""
@@ -255,24 +257,23 @@ UPLOAD_PROTOCOL := $(BOARD_UPLOAD_PROTOCOL)
 UPLOAD_LD :=
 
 ifeq "$(UPLOAD_PROTOCOL)" "dslite"
-    UPLOAD := $(DSLITE)
-    UPLOAD_FLAGS := 'load' '-c' '$(DSLITE_PATH)/$(ENERGIABOARD).ccxml' '-f' '$(TARGET).elf'
+	UPLOAD := $(DSLITE)
+	UPLOAD_FLAGS := 'load' '-c' '$(DSLITE_PATH)/$(ENERGIABOARD).ccxml' '-f' '$(TARGET).elf'
 
-    MSPDEBUG_PROTOCOL := "tilib"
-    MSPDEBUG_LD := LD_LIBRARY_PATH=$(ENERGIADIR)/hardware/tools/msp430/tilib
+	MSPDEBUG_PROTOCOL := "tilib"
+	MSPDEBUG_LD := LD_LIBRARY_PATH=$(ENERGIADIR)/hardware/tools/msp430/tilib
 else
-    UPLOAD := $(MSPDEBUG)
-    UPLOAD_FLAGS := '$(UPLOAD_PROTOCOL)' 'erase' 'load $(TARGET).elf' 'exit'
-    UPLOAD_LD := $(MSPDEBUG_LD)
+	UPLOAD := $(MSPDEBUG)
+	UPLOAD_FLAGS := '$(UPLOAD_PROTOCOL)' 'erase' 'load $(TARGET).elf' 'exit'
+	UPLOAD_LD := $(MSPDEBUG_LD)
 
-    MSPDEBUG_PROTOCOL := $(UPLOAD_PROTOCOL)
+	MSPDEBUG_PROTOCOL := $(UPLOAD_PROTOCOL)
 endif
 
 CPPFLAGS := -Os -Wall
 CPPFLAGS += -ffunction-sections -fdata-sections
 CPPFLAGS += -mmcu=$(BOARD_BUILD_MCU)
-#CPPFLAGS += -DF_CPU=$(BOARD_BUILD_FCPU) -DARDUINO=$(ARDUINOCONST)  -DENERGIA=$(ENERGIACONST)
-CPPFLAGS += -DF_CPU=8000000L -DARDUINO=$(ARDUINOCONST)  -DENERGIA=$(ENERGIACONST)
+CPPFLAGS += -DF_CPU=$(BOARD_BUILD_FCPU) -DARDUINO=$(ARDUINOCONST)  -DENERGIA=$(ENERGIACONST)
 CPPFLAGS += -I. -Iutil -Iutility -I$(ENERGIACOREDIR)
 CPPFLAGS += -I$(ENERGIADIR)/hardware/energia/msp430/variants/$(BOARD_BUILD_VARIANT)/
 CPPFLAGS += -I$(ENERGIASBOOK)/hardware/energia/msp430/variants/$(BOARD_BUILD_VARIANT)/
