@@ -278,9 +278,6 @@ CPPDEPFLAGS = -MMD -MP -MF .dep/$<.dep
 CPPINOFLAGS := -x c++ -include $(ENERGIACOREDIR)/Arduino.h
 LINKFLAGS := -mmcu=$(BOARD_BUILD_MCU) -Os -Wl,-gc-sections,-u,main -lm
 
-# figure out which arg to use with stty
-STTYFARG := $(shell stty --help > /dev/null 2>&1 && echo -F || echo -f)
-
 # include dependencies
 ifneq "$(MAKECMDGOALS)" "clean"
 -include $(DEPFILES)
@@ -317,7 +314,8 @@ boards:
 
 monitor:
 	stty raw 9600 -F $(SERIALDEV)
-	cat $(SERIALDEV)
+	cat <$(SERIALDEV) >$(SERIALDEV)
+	stty sane -F $(SERIALDEV)
 
 size: $(TARGET).elf
 	echo && $(MSP430SIZE) $(TARGET).elf
