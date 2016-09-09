@@ -201,7 +201,9 @@ MSPDEBUG := $(MSPDEBUG_PATH)/mspdebug
 GDB := $(COMPILER_PREFIX)msp430-gdb
 MSP430SIZE := $(COMPILER_PREFIX)msp430-size
 
-DSLITE_PATH=$(ENERGIADIR)/hardware/tools/DSLite/
+MSPDEBUG_LD :=
+
+DSLITE_PATH=$(ENERGIADIR)/hardware/tools/DSLite
 DSLITE := $(DSLITE_PATH)/DebugServer/bin/DSLite
 
 # files
@@ -255,9 +257,15 @@ UPLOAD_LD :=
 ifeq "$(UPLOAD_PROTOCOL)" "dslite"
     UPLOAD := $(DSLITE)
     UPLOAD_FLAGS := 'load' '-c' '$(DSLITE_PATH)/$(ENERGIABOARD).ccxml' '-f' '$(TARGET).elf'
+
+    MSPDEBUG_PROTOCOL := "tilib"
+    MSPDEBUG_LD := LD_LIBRARY_PATH=$(ENERGIADIR)/hardware/tools/msp430/tilib
 else
     UPLOAD := $(MSPDEBUG)
     UPLOAD_FLAGS := '$(UPLOAD_PROTOCOL)' 'erase' 'load $(TARGET).elf' 'exit'
+    UPLOAD_LD := $(MSPDEBUG_LD)
+
+    MSPDEBUG_PROTOCOL := $(UPLOAD_PROTOCOL)
 endif
 
 CPPFLAGS := -Os -Wall
@@ -323,8 +331,8 @@ size: $(TARGET).elf
 
 
 debug:
-	$(MSPDEBUG) $(MSPDEBUG_PROTOCOL) gdb
-	cgdb  -d $(GDB) $(TARGET).elf
+	$(MSPDEBUG_LD) $(MSPDEBUG) $(MSPDEBUG_PROTOCOL) gdb
+	$(GDB) $(TARGET).elf
 
 
 # building the target
