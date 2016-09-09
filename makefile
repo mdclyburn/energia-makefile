@@ -313,8 +313,9 @@ boards:
 			-e 's/\(.\{14\}\) *\(.*\)/\1 \2/'
 
 monitor:
-	stty raw 9600 -F $(SERIALDEV)
-	cat <$(SERIALDEV) >$(SERIALDEV)
+	stty raw 9600 igncr hupcl -echo -F $(SERIALDEV)
+	@echo Connected. Press Ctrl+D to close the monitor.
+	@sh -c 'trap "kill %1" INT; cat -v $(SERIALDEV) & cat >$(SERIALDEV); kill %1'
 	stty sane -F $(SERIALDEV)
 
 size: $(TARGET).elf
