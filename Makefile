@@ -5,6 +5,7 @@
 #_______________________________________________________________________________
 #                                                                    version 0.1
 #
+# Copyright (C) 2016 Marshall Clyburn <mardev2013@gmail.com>
 # Copyright (C) 2016 Foster McLane <fkmclane@gmail.com>
 # Copyright (C) 2013 Alessandro Pasotti
 # Copyright (C) 2011, 1012 Tim Marston <tim@ed.am>.
@@ -139,7 +140,6 @@ endif
 # default arduino version
 ARDUINOCONST ?= 10610
 ENERGIACONST ?= 18
-
 
 # auto mode?
 INOFILE := $(wildcard *.ino *.pde)
@@ -298,7 +298,7 @@ endif
 #_______________________________________________________________________________
 #                                                                          RULES
 
-.PHONY:	all target upload clean boards monitor size
+.PHONY:	all target upload clean boards monitor size debug
 
 all: target
 
