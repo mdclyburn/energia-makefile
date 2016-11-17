@@ -346,7 +346,7 @@ debug:
 
 
 $(TARGET).elf: $(ENERGIALIB) $(OBJECTS)
-	$(CC) $(LINKFLAGS) $(OBJECTS) $(ENERGIALIB) -o $@
+	$(CC) $(OBJECTS) $(LINKFLAGS) $(ENERGIALIB) -o $@
 
 %.o: %.c
 	mkdir -p .dep/$(dir $<)
