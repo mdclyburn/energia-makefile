@@ -11,7 +11,7 @@ To build an .elf file:
 2. Run:
 ```sh
 export ENERGIADIR=/<path_to>/arduino # only if in a weird place
-export ENERGIABOARD=uno # or whatever your target board is
+export ENERGIABOARD=MSP-EXP430FR5969LP # or whatever your target board is
 make
 ```
 
