@@ -112,8 +112,7 @@
 # boards       Display a list of available board names, so that you can set the
 #              BOARD environment variable appropriately.
 #
-# monitor      Start `screen` on the serial device.  This is meant to be an
-#              equivalent to the Arduino serial monitor.
+# monitor      Start a serial monitor session with the Launchpad.
 #
 # size         Displays size information about the built target.
 #
